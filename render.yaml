@@ -4,7 +4,9 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
-      git clone --depth 1 https://github.com/OpenMOSS/MMAudio.git
+      wget https://github.com/OpenMOSS/MMAudio/archive/refs/heads/main.zip
+      unzip main.zip
+      mv MMAudio-main MMAudio
       cd MMAudio && pip install -e .
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
