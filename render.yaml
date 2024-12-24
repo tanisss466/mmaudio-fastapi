@@ -1,9 +1,16 @@
 services:
-  # A Docker web service
   - type: web
-    name: fastapi-example
-    runtime: python
-    plan: free
-    autoDeploy: false
-    buildCommand: pip install -r requirements.txt
+    name: mmaudio-api
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      git clone https://github.com/OpenMOSS/MMAudio.git
+      cd MMAudio && pip install -e .
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
